@@ -63,9 +63,9 @@ public class AudioPlayerModule extends ReactContextBaseJavaModule implements Med
     public void onHostPause() {
         for (Map.Entry<Integer, MediaPlayer> entry : this.playerPool.entrySet()) {
             Integer playerId = entry.getKey();
+            MediaPlayer player = entry.getValue();
 
-            if (!this.playerContinueInBackground.get(playerId)) {
-                MediaPlayer player = entry.getValue();
+            if (!this.playerContinueInBackground.get(playerId) && player.isPlaying()) {
                 player.pause();
 
                 WritableMap info = getInfo(player);
